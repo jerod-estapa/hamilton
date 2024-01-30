@@ -8,7 +8,7 @@ SERVER_URL = "http://fastapi_server:8082"
 def get_fastapi_status(server_url: str = SERVER_URL):
     """Access FastAPI /docs endpoint to check if server is running"""
     try:
-        response = requests.get(f"{server_url}/docs")
+        response = requests.get(f"{server_url}/docs", timeout=60)
         if response.status_code == 200:
             return True
     except requests.exceptions.RequestException:
@@ -18,14 +18,14 @@ def get_fastapi_status(server_url: str = SERVER_URL):
 def post_store_arxiv(arxiv_ids: list[str], server_url: str = SERVER_URL):
     """Send POST request to FastAPI /store_arxiv endpoint"""
     payload = dict(arxiv_ids=arxiv_ids)
-    response = requests.post(f"{SERVER_URL}/store_arxiv", data=payload)
+    response = requests.post(f"{SERVER_URL}/store_arxiv", data=payload, timeout=60)
     return response
 
 
 def post_store_pdfs(pdf_files: list[UploadedFile], server_url: str = SERVER_URL):
     """Send POST request to FastAPI /store_pdfs endpoint"""
     files = [("pdf_files", f) for f in pdf_files]
-    response = requests.post(f"{SERVER_URL}/store_pdfs", files=files)
+    response = requests.post(f"{SERVER_URL}/store_pdfs", files=files, timeout=60)
     return response
 
 
@@ -39,11 +39,11 @@ def get_rag_summary(
     payload = dict(
         rag_query=rag_query, hybrid_search_alpha=hybrid_search_alpha, retrieve_top_k=retrieve_top_k
     )
-    response = requests.get(f"{SERVER_URL}/rag_summary", data=payload)
+    response = requests.get(f"{SERVER_URL}/rag_summary", data=payload, timeout=60)
     return response
 
 
 def get_all_documents_file_name():
     """Send GET request to FastAPI /documents endpoint"""
-    response = requests.get(f"{SERVER_URL}/documents")
+    response = requests.get(f"{SERVER_URL}/documents", timeout=60)
     return response

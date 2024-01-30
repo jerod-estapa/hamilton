@@ -27,7 +27,7 @@ def star_count(starcount_url: str, github_api_key: str) -> Tuple[str, int]:
     :param github_api_key: API key for GitHub
     :return:  A tuple of the repo name and the star count
     """
-    response = requests.get(starcount_url, headers={"Authorization": f"token {github_api_key}"})
+    response = requests.get(starcount_url, headers={"Authorization": f"token {github_api_key}"}, timeout=60)
     response.raise_for_status()  # Raise an exception for unsuccessful requests
 
     data = response.json()
@@ -76,7 +76,7 @@ def stargazers(stargazer_url: str, github_api_key: str) -> pd.DataFrame:
         "Accept": "application/vnd.github.v3.star+json",
     }
 
-    response = requests.get(stargazer_url, headers=headers)
+    response = requests.get(stargazer_url, headers=headers, timeout=60)
     response.raise_for_status()  # Raise an exception for unsuccessful requests
 
     data = response.json()
