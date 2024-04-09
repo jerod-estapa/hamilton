@@ -1,7 +1,6 @@
 """
 This is a module that contains our feature transforms.
 """
-import pickle
 from typing import Set
 
 import pandas as pd
@@ -11,6 +10,7 @@ from sklearn import impute  # import KNNImputer
 from sklearn import preprocessing
 
 from hamilton.function_modifiers import check_output, config
+import fickling
 
 
 def rare_titles() -> Set[str]:
@@ -75,7 +75,7 @@ def fit_categorical_encoder__use_existing(
     categorical_encoder_path: str,
 ) -> preprocessing.OneHotEncoder:
     with open(categorical_encoder_path, "rb") as f:
-        return pickle.load(f)
+        return fickling.load(f)
 
 
 def categorical_df(
@@ -127,7 +127,7 @@ def fit_knn_imputer__create_new(
 @config.when(model_to_use="use_existing")
 def fit_knn_imputer__use_existing(knn_imputer_path: str) -> impute.KNNImputer:
     with open(knn_imputer_path, "rb") as f:
-        return pickle.load(f)
+        return fickling.load(f)
 
 
 def knn_imputed_df(
@@ -168,7 +168,7 @@ def fit_scaler__create_new(
 @config.when(model_to_use="use_existing")
 def fit_scaler__use_existing(scaler_path: str) -> preprocessing.RobustScaler:
     with open(scaler_path, "rb") as f:
-        return pickle.load(f)
+        return fickling.load(f)
 
 
 def scaled_numeric_df(
