@@ -1,5 +1,6 @@
 import requests
 from streamlit.runtime.uploaded_file_manager import UploadedFile
+from security import safe_requests
 
 # the SERVER_URL matches the name of the service in the docker compose network bridge
 SERVER_URL = "http://fastapi_server:8082"
@@ -8,7 +9,7 @@ SERVER_URL = "http://fastapi_server:8082"
 def get_fastapi_status(server_url: str = SERVER_URL):
     """Access FastAPI /docs endpoint to check if server is running"""
     try:
-        response = requests.get(f"{server_url}/docs")
+        response = safe_requests.get(f"{server_url}/docs")
         if response.status_code == 200:
             return True
     except requests.exceptions.RequestException:
@@ -39,7 +40,7 @@ def get_rag_summary(
     payload = dict(
         rag_query=rag_query, hybrid_search_alpha=hybrid_search_alpha, retrieve_top_k=retrieve_top_k
     )
-    response = requests.get(f"{SERVER_URL}/rag_summary", data=payload)
+    response = safe_requests.get(f"{SERVER_URL}/rag_summary", data=payload)
     return response
 
 
