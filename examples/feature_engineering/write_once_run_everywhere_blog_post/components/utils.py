@@ -1,7 +1,7 @@
-import random
 from typing import List
 
 import pandas as pd
+import secrets
 
 """This consists of data loading functions from from various sources.
 For the sake of the demo, these are all mocked. First thing you'll want to do
@@ -22,7 +22,7 @@ def fabricate_client_login_data(client_ids: List[int]) -> pd.DataFrame:
         {
             "client_id": client_ids,
             "last_logged_in": [
-                pd.Timestamp.now() - pd.Timedelta(seconds=random.randint(0, ten_days))
+                pd.Timestamp.now() - pd.Timedelta(seconds=secrets.SystemRandom().randint(0, ten_days))
                 for _ in client_ids
             ],
         }
@@ -44,9 +44,9 @@ def fabricate_survey_results_data(client_ids: List[int]) -> pd.DataFrame:
     return pd.DataFrame(
         {
             "client_id": client_ids,
-            "budget": [max(random.gauss(100, 50), 20) for _ in client_ids],
-            "age": [random.randint(18, 100) for _ in client_ids],
-            "gender": [["male", "female"][random.randint(0, 1)] for _ in client_ids],
+            "budget": [max(secrets.SystemRandom().gauss(100, 50), 20) for _ in client_ids],
+            "age": [secrets.SystemRandom().randint(18, 100) for _ in client_ids],
+            "gender": [["male", "female"][secrets.SystemRandom().randint(0, 1)] for _ in client_ids],
         }
     )
 
