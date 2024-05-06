@@ -30,7 +30,7 @@ def post_pdf(
             content_type=content_type,
             user_query=user_query,
         ),
-    )
+    timeout=60)
     return response
 
 

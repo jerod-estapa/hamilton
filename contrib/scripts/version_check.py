@@ -11,7 +11,7 @@ with open("hamilton/contrib/version.py", "r") as f:
 CURRENT_VERSION = ".".join(map(str, VERSION))
 
 # Replace 'your-package-name' with your actual package name on PyPI
-response = requests.get("https://pypi.org/pypi/sf-hamilton-contrib/json")
+response = requests.get("https://pypi.org/pypi/sf-hamilton-contrib/json", timeout=60)
 data = response.json()
 pypi_version = data["info"]["version"]
 
