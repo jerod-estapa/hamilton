@@ -6,6 +6,7 @@ from typing import Any, Collection, Dict, Tuple, Type
 
 from hamilton.io.data_adapters import DataLoader, DataSaver
 from hamilton.io.utils import get_file_metadata
+import fickling
 
 
 @dataclasses.dataclass
@@ -94,7 +95,7 @@ class PickleLoader(DataLoader):
 
     def load_data(self, type_: Type[object]) -> Tuple[object, Dict[str, Any]]:
         with open(self.path, "rb") as f:
-            return pickle.load(f), get_file_metadata(self.path)
+            return fickling.load(f), get_file_metadata(self.path)
 
 
 @dataclasses.dataclass
