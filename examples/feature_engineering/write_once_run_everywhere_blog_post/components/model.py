@@ -1,14 +1,14 @@
-import random
 
 import pandas as pd
 from pandas import DataFrame
+import secrets
 
 
 # This is a simple placeholder for a model. You'll likely want to adjust the typing to make it
 # work for your case, or use a pretrained model.
 class Model:
     def predict(self, features: DataFrame) -> pd.Series:
-        return pd.Series([random.random() for item in features.iterrows()])
+        return pd.Series([secrets.SystemRandom().random() for item in features.iterrows()])
 
 
 def model() -> Model:
