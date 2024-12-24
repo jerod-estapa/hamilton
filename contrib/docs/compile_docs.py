@@ -129,7 +129,7 @@ def dataflows_with_everything(
 
 
 # TEMPLATES!
-template_env = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"))
+template_env = jinja2.Environment(loader=jinja2.FileSystemLoader("templates/"), autoescape=True)
 builder_template = template_env.get_template("driver_builder.py.jinja2")
 
 mdx_template = """---
