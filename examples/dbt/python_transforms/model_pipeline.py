@@ -1,7 +1,6 @@
 """
 This is a module that contains our "model fitting and related" transforms.
 """
-import pickle
 from typing import Dict
 
 import numpy as np
@@ -9,6 +8,7 @@ import pandas as pd
 from sklearn import base, linear_model, metrics, model_selection
 
 from hamilton.function_modifiers import config, extract_fields
+import fickling
 
 
 def target_column_name() -> str:
@@ -59,7 +59,7 @@ def fit_model__create_new(
 @config.when(model_to_use="use_existing")
 def fit_model__use_existing(model_path: str) -> base.ClassifierMixin:
     with open(model_path, "rb") as f:
-        return pickle.load(f)
+        return fickling.load(f)
 
 
 def y_train_estimation(
