@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import Dict, List, Tuple
 
 import pandas as pd
-import requests
 
 from hamilton.function_modifiers import save_to, value
 from hamilton.htypes import Collect, Parallelizable
+from security import safe_requests
 
 
 def starcount_url(repositories: List[str]) -> Parallelizable[str]:
@@ -27,7 +27,7 @@ def star_count(starcount_url: str, github_api_key: str) -> Tuple[str, int]:
     :param github_api_key: API key for GitHub
     :return:  A tuple of the repo name and the star count
     """
-    response = requests.get(starcount_url, headers={"Authorization": f"token {github_api_key}"})
+    response = safe_requests.get(starcount_url, headers={"Authorization": f"token {github_api_key}"})
     response.raise_for_status()  # Raise an exception for unsuccessful requests
 
     data = response.json()
@@ -76,7 +76,7 @@ def stargazers(stargazer_url: str, github_api_key: str) -> pd.DataFrame:
         "Accept": "application/vnd.github.v3.star+json",
     }
 
-    response = requests.get(stargazer_url, headers=headers)
+    response = safe_requests.get(stargazer_url, headers=headers)
     response.raise_for_status()  # Raise an exception for unsuccessful requests
 
     data = response.json()
